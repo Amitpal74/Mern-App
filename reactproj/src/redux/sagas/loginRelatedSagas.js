@@ -8,6 +8,7 @@ export function* getLogin(action){
             response = yield call(getLoginCheck, action.payload)
 
             if(response){
+                console.log(response);
                 yield put(actions.setLogin)
             }
     }catch(err){
