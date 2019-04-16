@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const Role = require('./Role');
 require('../utils/common');
-
+ 
 const user = new Schema({
     name: {
            type:String   
@@ -21,7 +22,9 @@ const user = new Schema({
    },
    email: {
     type:String,
-    required : true    
+    unique : true, 
+    required : true ,
+    dropDups: true   
 }, 
 password: {
     type:String,
@@ -32,7 +35,11 @@ tokens:[{
         type:String,
         required : true    
     }
-   }]
+   }],  
+  role : {
+        type : Schema.Types.ObjectId,
+        ref : Role
+   }
 });
   
    user.statics.findByEmailAndPassword =  async function(email,pwd) {
@@ -69,7 +76,7 @@ tokens:[{
 } */
 
 user.methods.getAuthTokens = async function() {
-    alert(sessionKey);
+    console.log("sessionKey"+sessionKey);
     const user = this;
     const token = await jwt.sign({ _id: user._id.toString() }, sessionKey);
     user.tokens = user.tokens.concat({token});
