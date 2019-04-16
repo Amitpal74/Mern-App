@@ -5,8 +5,8 @@ const auth = require('../middlewares/authorization');
 const bcrypt = require('bcryptjs');
 const router = new express.Router();
 
-router.get('/user/get',auth, (req,res) => {
-    Person.find().then((persons) => {
+exports.getUserList = async function(req,res){
+    await Person.find().then((persons) => {
         console.log(persons)
         res.status(200).send(persons);
     }).catch((error) => {
@@ -14,20 +14,20 @@ router.get('/user/get',auth, (req,res) => {
     })
 
    
-})
+}
 
-router.post('/user/getOne',auth, (req,res) => {
+exports.getUserByEmail = async function(req,res){
     console.log(req.body.email);
-    Person.findOne({email:req.body.email}).then((person) => {
+   await Person.findOne({email:req.body.email}).then((person) => {
        console.log(person)
        res.status(200).send(person);
    }).catch((error) => {
       res.status(400).send(error);
    }) 
-})
+}
 
 
-router.post('/user/save',async (req,res) => {
+exports.saveUser = async function(req,res){
     console.log("in save");
     const role = await Role.findOne({name:"USER"}).then((role) => {
     console.log(role)
@@ -48,9 +48,9 @@ router.post('/user/save',async (req,res) => {
     }catch(error){
         res.status(400).send(error);
     }
-})
+}
 
-router.post('/user/updateRole',auth,async (req,res) => {
+exports.updateRole = async function(req,res){
     console.log("in updateRole");
     const person = await Person.findOne({email:req.body.email}).then((person) => {
         console.log(person)
@@ -75,8 +75,7 @@ router.post('/user/updateRole',auth,async (req,res) => {
     }catch(error){
         res.status(400).send(error);
     }
-})
+}
 
 
 
-module.exports = router 

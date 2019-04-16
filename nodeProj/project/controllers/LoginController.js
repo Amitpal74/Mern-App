@@ -5,7 +5,7 @@ const auth = require('../middlewares/authorization');
 const bcrypt = require('bcryptjs');
 const router = new express.Router();
 
-router.post('/login', async (req,res) => {
+exports.login = async function(req,res) {
     console.log(req.body);
     try{
         console.log(1);
@@ -16,9 +16,9 @@ router.post('/login', async (req,res) => {
         res.status(400).send(error);
     }
    
-})
+};
 
-router.post('/logout',auth, async (req,res) => {
+exports.logout =  async function(req,res){
     try{
      console.log(req.person);
     req.person.tokens =  await req.person.tokens.filter(token => {
@@ -33,6 +33,6 @@ router.post('/logout',auth, async (req,res) => {
         res.status(400).send(error);
     }
    
-})
+}
 
 module.exports = router 
