@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { baseUrl } from '../../Common/config';
-import axios from 'axios'
+// import axios from 'axios'
+import { bindActionCreators } from 'redux';
+import { getLogin } from '../../redux/actions'
+import { connect } from 'react-redux';
 
 class LoginForm extends Component {
     constructor(props) {
@@ -21,21 +24,28 @@ class LoginForm extends Component {
     }
     login = (e) => {
         e.preventDefault();
-        axios.post(baseUrl + 'login', {
+        let paramObj = {
             email: this.state.email,
             password: this.state.password
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        }
+        const url = `${baseUrl}/login`
+        this.props.getLogin({url: url, body: paramObj})
+
+        // axios.post(baseUrl + 'login', {
+        //     email: this.state.email,
+        //     password: this.state.password
+        //   })
+        //   .then(function (response) {
+        //     console.log(response);
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
     }
 
     render() {
         return (
-            <div  className="row d-flex justify-content-center">
+            <div className="row d-flex justify-content-center">
                 <div className="col-sm-4 ">
                     <form className="demoForm" onSubmit={this.login}>
                         <div style={{ borderStyle: 'ridge' }}>
@@ -56,4 +66,18 @@ class LoginForm extends Component {
     }
 }
 
-export default LoginForm;
+const mapStateToProps = (state) => {
+    console.log(state);
+
+
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        getLogin: getLogin
+    },dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (LoginForm)
+
+// export default LoginForm;
