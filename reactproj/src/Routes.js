@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import Login from './Containers/Login'
+import Login from './Containers/Login/login'
 
 const RoutingComponent = () =>{
     return(

@@ -1,7 +1,7 @@
 const express = require('express');
 require('./project/db/mongoose');
 const app = express();
-const port = 3000;
+const port = 8080;
 const router = require('./project/routes/routes')
 const bodyParser = require('body-parser')
 // app.use(express.json());
