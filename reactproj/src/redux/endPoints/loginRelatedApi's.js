@@ -5,9 +5,9 @@ export const getLoginCheck = (action) =>{
     return axios({
         method: 'POST',
         url: `${action.url}`,
-        params: action.body ? action.body: null,
+        data: action.body ? action.body: null,
         headers:{
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
         } 
     })
 }
