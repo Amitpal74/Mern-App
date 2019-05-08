@@ -5,7 +5,7 @@ const auth = require('../middlewares/authorization');
 const bcrypt = require('bcryptjs');
 const router = new express.Router();
 
-exports.login = async function(req,res) {
+module.exports.login = async function(req,res) {
     console.log(req.body);
     try{
         console.log(1);
@@ -18,7 +18,7 @@ exports.login = async function(req,res) {
    
 };
 
-exports.logout =  async function(req,res){
+module.exports.logout =  async function(req,res){
     try{
      console.log(req.person);
     req.person.tokens =  await req.person.tokens.filter(token => {
@@ -34,5 +34,3 @@ exports.logout =  async function(req,res){
     }
    
 }
-
-module.exports = router 

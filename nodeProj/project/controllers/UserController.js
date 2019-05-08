@@ -5,7 +5,7 @@ const auth = require('../middlewares/authorization');
 const bcrypt = require('bcryptjs');
 const router = new express.Router();
 
-exports.getUserList = async function(req,res){
+module.exports.getUserList = async function(req,res){
     await Person.find().then((persons) => {
         console.log(persons)
         res.status(200).send(persons);
@@ -16,7 +16,7 @@ exports.getUserList = async function(req,res){
    
 }
 
-exports.getUserByEmail = async function(req,res){
+module.exports.getUserByEmail = async function(req,res){
     console.log(req.body.email);
    await Person.findOne({email:req.body.email}).then((person) => {
        console.log(person)
@@ -27,7 +27,7 @@ exports.getUserByEmail = async function(req,res){
 }
 
 
-exports.saveUser = async function(req,res){
+module.exports.saveUser = async function(req,res){
     console.log("in save");
     const role = await Role.findOne({name:"USER"}).then((role) => {
     console.log(role)
@@ -50,7 +50,7 @@ exports.saveUser = async function(req,res){
     }
 }
 
-exports.updateRole = async function(req,res){
+module.exports.updateRole = async function(req,res){
     console.log("in updateRole");
     const person = await Person.findOne({email:req.body.email}).then((person) => {
         console.log(person)
